@@ -1,0 +1,71 @@
+syntax = "proto3";
+
+package dockman;
+
+enum ContainerState {
+  UNKNOWN = 0;
+  CREATED = 1;
+  RUNNING = 2;
+  STOPPED = 3;
+  PAUSED = 4;
+}
+
+message ContainerSummary {
+  string id = 1;
+  string name = 2;
+  string image = 3;
+  ContainerState state = 4;
+  int64  created_at = 5; // Unix timestamp (UTC)
+}
+
+message ListContainersRequest {
+  bool all = 1;
+}
+
+message ListContainersResponse {
+  repeated ContainerSummary containers = 1;
+}
+
+
+message PullImageRequest {
+  string image = 1;
+}
+
+message PullImageResponse {
+  bool success = 1;
+  string error_message = 2;
+  string image_id = 3;
+}
+
+message RunContainerRequest {
+  string image = 1;
+  string name = 2;
+  repeated string args = 3;
+}
+
+message RunContainerResponse {
+  bool success = 1;
+  string error_message = 2;
+  string container_id = 3; // created container id
+}
+
+message ContainerId {
+  string id = 1;
+}
+
+message ActionResponse {
+  bool success = 1;
+  string error_message = 2;
+}
+
+service DockmanService {
+  rpc ListContainers(ListContainersRequest) returns (ListContainersResponse);
+
+  rpc StartContainer(ContainerId) returns (ActionResponse);
+  rpc StopContainer(ContainerId) returns (ActionResponse);
+  rpc RestartContainer(ContainerId) returns (ActionResponse);
+  rpc RemoveContainer(ContainerId) returns (ActionResponse);
+
+  rpc PullImage(PullImageRequest) returns (PullImageResponse);
+  rpc RunContainer(RunContainerRequest) returns (RunContainerResponse);
+}
