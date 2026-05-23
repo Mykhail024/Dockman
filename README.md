@@ -24,6 +24,50 @@ This project is licensed under the GNU GPL-3.0. See [LICENSE](./LICENSE) for det
 
 ---
 
+## Build Instructions (Linux)
+
+Dockman currently supports **Linux only**.
+
+### Requirements
+
+Make sure the following dependencies are installed:
+
+- CMake (>= 3.16)
+- Qt 6
+- Protobuf
+- gRPC
+- C++ compiler (GCC or Clang)
+
+---
+
+### Build steps
+
+```bash
+# Clone repository
+git clone https://github.com/Mykhail024/Dockman.git
+cd Dockman
+
+# Create build directory
+mkdir build
+cd build
+
+# Configure project
+cmake ..
+
+# Build project
+cmake --build . --parallel
+```
+
+---
+
+### Run applications
+
+After successful build, binaries will be located at:
+- Client: `build/client/bin/dockman`
+- Server: `build/server/bin/dockman_server`
+
+---
+
 ## Project Status
 
 Early development stage. No stable releases and no backward compatibility guarantees.
