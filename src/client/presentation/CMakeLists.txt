@@ -1,3 +1,5 @@
+add_subdirectory(theme)
+
 set(QML_FILES
     #root
     main.qml
