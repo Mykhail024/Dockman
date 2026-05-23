@@ -49,9 +49,11 @@ target_link_libraries(dockman_server PRIVATE
   nlohmann_json::nlohmann_json
 )
 
-target_compile_options(dockman_server PRIVATE
-  -Wno-error=nullability-extension
-)
+if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+  target_compile_options(dockman_server PRIVATE
+    -Wno-error=nullability-extension
+  )
+endif()
 
 if(NOT ANDROID)
   set_target_properties(dockman_server PROPERTIES
