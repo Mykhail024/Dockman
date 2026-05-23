@@ -1,0 +1,5 @@
+#pragma once
+
+#define DOCKMAN_VERSION "@DOCKMAN_VERSION@"
+
+#cmakedefine DOCKMAN_ENABLE_LOGGING
