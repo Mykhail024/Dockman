@@ -39,19 +39,13 @@ int main(int argc, char *argv[])
         return -1;
     }
 
-    const QUrl url(QStringLiteral("qrc:/Dockman/Presentation/main.qml"));
-
     QQmlApplicationEngine engine;
 
     QObject::connect(
-        &engine, &QQmlApplicationEngine::objectCreated, &app,
-        [url](QObject *obj, const QUrl &objUrl) {
-            if (!obj && url == objUrl)
-                QCoreApplication::exit(-1);
-        },
-        Qt::QueuedConnection);
+        &engine, &QQmlApplicationEngine::objectCreationFailed, &app,
+        []() { QCoreApplication::exit(-1); }, Qt::QueuedConnection);
 
-    engine.load(url);
+    engine.loadFromModule("Dockman.Presentation", "Main");
 
     return app.exec();
 }

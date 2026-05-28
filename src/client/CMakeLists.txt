@@ -9,6 +9,8 @@ find_package(Qt6 REQUIRED COMPONENTS
   Network
 )
 
+qt_standard_project_setup(REQUIRES 6.11)
+
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOMOC ON)
 set(QT_QML_GENERATE_QMLLS_INI ON)
@@ -47,7 +49,3 @@ set_target_properties(dockman PROPERTIES
 endif()
 
 qt_import_qml_plugins(dockman)
-
-#     DEPENDS ${CMAKE_BINARY_DIR}/src/android-build/dockman.apk
-# 	)
-# endif()

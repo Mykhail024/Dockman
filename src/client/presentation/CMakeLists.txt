@@ -2,14 +2,14 @@ add_subdirectory(theme)
 
 set(QML_FILES
     #root
-    main.qml
+    Main.qml
 )
 
 set(SRC_FILES
     src/url_opener.cpp
 )
 
-set(INCLUDE_FILES 
+set(INCLUDE_FILES
     include/url_opener.h
 )
 
@@ -19,13 +19,18 @@ qt_add_qml_module(dockman_presentation
     URI "Dockman.Presentation"
     QML_FILES
         ${QML_FILES}
-    RESOURCE_PREFIX /
     SOURCES
         ${SRC_FILES}
         ${INCLUDE_FILES}
+    IMPORTS "Dockman.Theme"
     NO_GENERATE_EXTRA_QMLDIRS
 )
 
 target_include_directories(dockman_presentation PUBLIC include)
 
-target_link_libraries(dockman_presentation PRIVATE dockman-themeplugin Qt6::Gui Qt6::QuickControls2 Qt6::Core)
+target_link_libraries(dockman_presentation PRIVATE
+  dockman-theme
+  Qt6::Gui
+  Qt6::QuickControls2
+  Qt6::Core
+)

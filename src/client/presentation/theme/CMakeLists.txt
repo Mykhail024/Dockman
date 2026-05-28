@@ -1,5 +1,4 @@
 set_source_files_properties(
-    Theme.qml
     Colors.qml
     Typography.qml
     Spacing.qml
@@ -16,9 +15,7 @@ qt_add_qml_module(dockman-theme
     STATIC
     URI "Dockman.Theme"
     VERSION 1.0
-    RESOURCE_PREFIX /
     QML_FILES
-        Theme.qml
         Colors.qml
         Typography.qml
         Spacing.qml
