@@ -3,6 +3,12 @@ add_subdirectory(theme)
 set(QML_FILES
     #root
     Main.qml
+
+    components/StyledSwitch.qml
+    components/BorderBox.qml
+    components/BorderProperties.qml
+    components/TabButton.qml
+    components/HostListItem.qml
 )
 
 set(SRC_FILES

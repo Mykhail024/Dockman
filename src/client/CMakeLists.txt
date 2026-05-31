@@ -18,6 +18,10 @@ set(QT_QML_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/qml)
 
 qt_add_executable(dockman
   main.cpp
+
+  src/HostListModel.cpp
+
+  ${CMAKE_SOURCE_DIR}/resources/resources.qrc
 )
 
 add_subdirectory(presentation)
@@ -32,6 +36,8 @@ target_link_libraries(dockman PRIVATE
     Qt6::Grpc
     Qt6::Network
 )
+
+target_include_directories(dockman PRIVATE include)
 
 configure_file(
   ${CMAKE_CURRENT_SOURCE_DIR}/qmlls.ini.in

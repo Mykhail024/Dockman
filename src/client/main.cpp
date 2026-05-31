@@ -2,6 +2,7 @@
 #include <QDir>
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QQmlContext>
 #include <QQmlEngine>
 #include <QQuickStyle>
 #include <QStandardPaths>
@@ -44,6 +45,10 @@ int main(int argc, char *argv[])
     QObject::connect(
         &engine, &QQmlApplicationEngine::objectCreationFailed, &app,
         []() { QCoreApplication::exit(-1); }, Qt::QueuedConnection);
+
+    auto hosts_model = new HostListModel(&engine);
+
+    engine.rootContext()->setContextProperty("hostListModel", hosts_model);
 
     engine.loadFromModule("Dockman.Presentation", "Main");
 
