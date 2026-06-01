@@ -3,18 +3,31 @@
 #include "dockman/Host.h"
 #include "dockman/HostListModel.h"
 
-HostListModel::HostListModel(QObject *parent) : QAbstractListModel(parent)
+HostListModel::HostListModel(QObject *parent) : QAbstractListModel(parent) {}
+
+void HostListModel::setHosts(const QVector<Host> &hosts)
 {
-#ifndef NDEBUG
-    m_hosts = {
-        { {.id = "uuid1", .name = "Production Server", .address = "127.0.0.1", .port = 25565},
-         {true, ""}         },
-        {{.id = "uuid2", .name = "Development Server", .address = "127.0.0.1", .port = 25566},
-         {false, "Time out"}},
-        {    {.id = "uuid3", .name = "Staging Server", .address = "127.0.0.1", .port = 25567},
-         {true, ""}         }
-    };
-#endif
+    emit beginResetModel();
+
+    m_hosts.clear();
+
+    for (const auto &host : hosts) {
+        m_hosts.push_back({
+            host, {false, ""}
+        });
+    }
+
+    emit endResetModel();
+}
+
+QVector<Host> HostListModel::hosts() const
+{
+    QVector<Host> hosts;
+    hosts.reserve(m_hosts.size());
+    for (const auto &host : m_hosts) {
+        hosts.push_back(host.host);
+    }
+    return hosts;
 }
 
 int HostListModel::rowCount(const QModelIndex &parent) const

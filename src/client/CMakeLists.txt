@@ -20,6 +20,7 @@ qt_add_executable(dockman
   main.cpp
 
   src/HostListModel.cpp
+  src/HostStorage.cpp
 
   ${CMAKE_SOURCE_DIR}/resources/resources.qrc
 )

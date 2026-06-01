@@ -15,6 +15,9 @@ class HostListModel : public QAbstractListModel
         QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
         QHash<int, QByteArray> roleNames() const override;
 
+        void setHosts(const QVector<Host> &hosts);
+        [[nodiscard]] QVector<Host> hosts() const;
+
         enum Roles {
             IdRole = Qt::UserRole + 1,
             AddressRole,
