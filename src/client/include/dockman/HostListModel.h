@@ -25,13 +25,16 @@ class HostListModel : public QAbstractListModel
         };
 
     private:
-        struct HostListItem
+        struct HostRuntimeState
         {
-                Host host;
-
                 bool connected = false;
                 QString lastError;
         };
+        struct HostItem
+        {
+                Host host;
+                HostRuntimeState state;
+        };
 
-        std::vector<HostListItem> m_hosts;
+        QVector<HostItem> m_hosts;
 };

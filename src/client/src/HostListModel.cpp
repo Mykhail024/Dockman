@@ -8,11 +8,11 @@ HostListModel::HostListModel(QObject *parent) : QAbstractListModel(parent)
 #ifndef NDEBUG
     m_hosts = {
         { {.id = "uuid1", .name = "Production Server", .address = "127.0.0.1", .port = 25565},
-         true,         "" },
+         {true, ""}         },
         {{.id = "uuid2", .name = "Development Server", .address = "127.0.0.1", .port = 25566},
-         false, "Time out"},
+         {false, "Time out"}},
         {    {.id = "uuid3", .name = "Staging Server", .address = "127.0.0.1", .port = 25567},
-         true,         "" }
+         {true, ""}         }
     };
 #endif
 }
@@ -42,9 +42,9 @@ QVariant HostListModel::data(const QModelIndex &index, int role) const
     case PortRole:
         return obj.host.port;
     case ConnectedRole:
-        return obj.connected;
+        return obj.state.connected;
     case LastErrorRole:
-        return obj.lastError;
+        return obj.state.lastError;
     }
 
     return {};
