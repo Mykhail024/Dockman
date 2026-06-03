@@ -58,7 +58,12 @@ message ActionResponse {
   string error_message = 2;
 }
 
+message PingRequest {}
+message PingResponse {}
+
 service DockmanService {
+  rpc Ping(PingRequest) returns (PingResponse);
+
   rpc ListContainers(ListContainersRequest) returns (ListContainersResponse);
 
   rpc StartContainer(ContainerId) returns (ActionResponse);

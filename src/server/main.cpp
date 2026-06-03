@@ -11,6 +11,7 @@
 
 #include "config.h"
 #include "dockman.grpc.pb.h"
+#include "dockman.pb.h"
 #include "dockman/File.h"
 #include "dockman/Logger.h"
 
@@ -21,6 +22,8 @@ using dockman::ContainerSummary;
 using dockman::DockmanService;
 using dockman::ListContainersRequest;
 using dockman::ListContainersResponse;
+using dockman::PingRequest;
+using dockman::PingResponse;
 using dockman::PullImageRequest;
 using dockman::PullImageResponse;
 using dockman::RunContainerRequest;
@@ -70,6 +73,12 @@ static dockman::ContainerState mapPodmanState(const std::string &state)
 class DockmanServiceImpl final : public DockmanService::Service
 {
     public:
+        Status Ping(ServerContext *, const PingRequest *, PingResponse *response) override
+        {
+            (void)response;
+            return Status::OK;
+        }
+
         Status ListContainers(ServerContext *, const ListContainersRequest *request,
                               ListContainersResponse *response) override
         {
