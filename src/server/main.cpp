@@ -11,8 +11,8 @@
 
 #include "config.h"
 #include "dockman.grpc.pb.h"
-#include "dockman/file.h"
-#include "dockman/logger.h"
+#include "dockman/File.h"
+#include "dockman/Logger.h"
 
 using dockman::ActionResponse;
 using dockman::ContainerId;

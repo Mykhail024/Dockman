@@ -1,6 +1,6 @@
 #include <QDebug>
 
-#include "url_opener.h"
+#include "dockman/UrlOpener.h"
 
 bool UrlOpener::open(const QString &url)
 {

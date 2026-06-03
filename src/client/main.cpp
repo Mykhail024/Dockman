@@ -9,7 +9,7 @@
 #include "config.h"
 #include "dockman/HostListModel.h"
 #include "dockman/HostStorage.h"
-#include "dockman/logger.h"
+#include "dockman/Logger.h"
 
 bool createDataDir()
 {

@@ -12,11 +12,11 @@ set(QML_FILES
 )
 
 set(SRC_FILES
-    src/url_opener.cpp
+    src/UrlOpener.cpp
 )
 
 set(INCLUDE_FILES
-    include/url_opener.h
+    include/dockman/UrlOpener.h
 )
 
 qt_add_qml_module(dockman_presentation
@@ -32,7 +32,10 @@ qt_add_qml_module(dockman_presentation
     NO_GENERATE_EXTRA_QMLDIRS
 )
 
-target_include_directories(dockman_presentation PUBLIC include)
+target_include_directories(dockman_presentation PUBLIC
+  include
+  include/dockman
+)
 
 target_link_libraries(dockman_presentation PRIVATE
   dockman-theme

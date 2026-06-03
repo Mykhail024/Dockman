@@ -7,7 +7,7 @@
 
 #include "config.h"
 #include "dockman/HostStorage.h"
-#include "dockman/logger.h"
+#include "dockman/Logger.h"
 
 HostStorage::HostStorage(const QString &storageFile) : m_storageFile(storageFile) {}
 

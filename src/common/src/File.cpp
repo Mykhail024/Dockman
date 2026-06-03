@@ -2,7 +2,7 @@
 #include <sstream>
 #include <string>
 
-#include "dockman/file.h"
+#include "dockman/File.h"
 
 namespace dockman::file {
 std::string readFile(const std::string &path)
