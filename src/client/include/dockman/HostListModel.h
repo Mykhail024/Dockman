@@ -8,6 +8,8 @@
 
 class HostListModel : public QAbstractListModel
 {
+        Q_OBJECT
+
     public:
         HostListModel(QObject *parent = nullptr);
 
@@ -17,7 +19,14 @@ class HostListModel : public QAbstractListModel
 
         void setHosts(const QVector<Host> &hosts);
         [[nodiscard]] QVector<Host> hosts() const;
+        void addHost(const Host &host);
 
+        Q_INVOKABLE bool addHost(const QString &name, const QString &address, const quint16 port);
+
+    signals:
+        void hostsChanged();
+
+    private:
         enum Roles {
             IdRole = Qt::UserRole + 1,
             AddressRole,
@@ -27,7 +36,6 @@ class HostListModel : public QAbstractListModel
             LastErrorRole
         };
 
-    private:
         struct HostRuntimeState
         {
                 bool connected = false;

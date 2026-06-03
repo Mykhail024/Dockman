@@ -4,6 +4,7 @@ import QtQuick.Effects
 import QtQuick
 
 import "./components"
+import "./dialogs"
 
 import Dockman.Theme
 
@@ -17,6 +18,19 @@ ApplicationWindow {
     title: "Dockman"
 
     color: Colors.background
+
+    AddHostDialog {
+        id: addHostDialog
+
+        parent: Overlay.overlay
+        anchors.centerIn: parent
+
+        onAddRequested: (name, address, port) => {
+            if(hostListModel.addHost(name, address, port)) {
+                console.log("Host added");
+            }
+        }
+    }
 
     RowLayout {
         anchors.fill: parent
@@ -178,6 +192,10 @@ ApplicationWindow {
                                 ColorAnimation { duration: Transitions.durationFast; easing: Easing.InQuad }
                             }
                         }
+
+                        onClicked: {
+                            addHostDialog.open()
+                        }
                     }
 
                 }
@@ -229,6 +247,5 @@ ApplicationWindow {
                 }
             }
         }
-
     }
 }

@@ -1,7 +1,9 @@
 #include <QStringLiteral>
+#include <QUuid>
 
 #include "dockman/Host.h"
 #include "dockman/HostListModel.h"
+#include "dockman/Logger.h"
 
 HostListModel::HostListModel(QObject *parent) : QAbstractListModel(parent) {}
 
@@ -18,6 +20,34 @@ void HostListModel::setHosts(const QVector<Host> &hosts)
     }
 
     emit endResetModel();
+}
+
+void HostListModel::addHost(const Host &host)
+{
+    const auto row = m_hosts.size();
+    emit beginInsertRows(QModelIndex(), row, row);
+
+    m_hosts.push_back({
+        host, {false, ""}
+    });
+
+    Log_Debug("Host added: " + host.name.toStdString());
+
+    emit endInsertRows();
+    emit hostsChanged();
+}
+
+bool HostListModel::addHost(const QString &name, const QString &address, const quint16 port)
+{
+    if (name.trimmed().isEmpty() || address.trimmed().isEmpty() || port == 0) {
+        return false;
+    }
+
+    const QString id = QUuid::createUuid().toString(QUuid::WithoutBraces);
+    Host host{.id = id, .name = name, .address = address, .port = port};
+    addHost(host);
+
+    return true;
 }
 
 QVector<Host> HostListModel::hosts() const

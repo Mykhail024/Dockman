@@ -5,10 +5,14 @@ set(QML_FILES
     Main.qml
 
     components/StyledSwitch.qml
+    components/StyledButton.qml
+    components/StyledTextField.qml
     components/BorderBox.qml
     components/BorderProperties.qml
     components/TabButton.qml
     components/HostListItem.qml
+
+    dialogs/AddHostDialog.qml
 )
 
 set(SRC_FILES
