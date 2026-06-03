@@ -18,7 +18,8 @@ enum class Level {
     Debug,
     Info,
     Warning,
-    Error
+    Error,
+    Fatal
 };
 
 inline constexpr std::string_view level_color(Level level)
@@ -31,6 +32,8 @@ inline constexpr std::string_view level_color(Level level)
     case Level::Warning:
         return yellow;
     case Level::Error:
+        return red;
+    case Level::Fatal:
         return red;
     }
     return reset;
@@ -47,6 +50,8 @@ inline constexpr std::string_view level_name(Level level)
         return "Warning";
     case Level::Error:
         return "Error";
+    case Level::Fatal:
+        return "Fatal";
     }
     return "Unknown";
 }
@@ -62,7 +67,9 @@ template <typename T>
 inline void write(Level level, const T &message,
                   const std::source_location &loc = std::source_location::current())
 {
-    std::ostream &out = (level == Level::Warning || level == Level::Error) ? std::cerr : std::cout;
+    std::ostream &out = (level == Level::Warning || level == Level::Error || level == Level::Fatal)
+                            ? std::cerr
+                            : std::cout;
 
     out << "[" << level_color(level) << level_name(level) << reset << "] " << message;
 
@@ -72,7 +79,7 @@ inline void write(Level level, const T &message,
 
     out << '\n';
 
-    if (level == Level::Error) {
+    if (level == Level::Fatal) {
         std::exit(EXIT_FAILURE);
     }
 }
@@ -82,3 +89,4 @@ inline void write(Level level, const T &message,
 #define Log_Info(message) ::dockman::log::write(::dockman::log::Level::Info, (message))
 #define Log_Warning(message) ::dockman::log::write(::dockman::log::Level::Warning, (message))
 #define Log_Error(message) ::dockman::log::write(::dockman::log::Level::Error, (message))
+#define Log_Fatal(message) ::dockman::log::write(::dockman::log::Level::Fatal, (message))
