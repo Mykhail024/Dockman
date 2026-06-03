@@ -7,8 +7,7 @@
 #include <QStandardPaths>
 
 #include "config.h"
-#include "dockman/HostListModel.h"
-#include "dockman/HostStorage.h"
+#include "dockman/DockmanApp.h"
 #include "dockman/Logger.h"
 
 bool createDataDir()
@@ -41,37 +40,11 @@ int main(int argc, char *argv[])
         return -1;
     }
 
-    QQmlApplicationEngine engine;
-
-    QObject::connect(
-        &engine, &QQmlApplicationEngine::objectCreationFailed, &app,
-        []() { QCoreApplication::exit(-1); }, Qt::QueuedConnection);
-
-    const QString HOSTS_FILE =
-        QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + "/hosts.json";
-
-    HostStorage hostStorage(HOSTS_FILE);
-
-    auto hostsModel = new HostListModel(&engine);
-    const auto hosts = hostStorage.loadHosts();
-
-    if (hosts.empty() && !hostStorage.lastError().isEmpty()) {
-        Log_Warning("Failed to load hosts from file " + hostStorage.storageFile().toStdString() +
-                    ": " + hostStorage.lastError().toStdString());
+    DockmanApp dApp(&app);
+    if (dApp.init(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation))) {
+        Log_Error("Failed to init application");
+        return -1;
     }
-
-    hostsModel->setHosts(hosts);
-
-    QObject::connect(&app, &QGuiApplication::aboutToQuit, [&hostStorage, hostsModel]() {
-        const auto hosts = hostsModel->hosts();
-        if (!hostStorage.saveHosts(hosts)) {
-            Log_Warning("Failed to save hosts to file " + hostStorage.storageFile().toStdString() +
-                        ": " + hostStorage.lastError().toStdString());
-        }
-    });
-
-    engine.rootContext()->setContextProperty("hostListModel", hostsModel);
-    engine.loadFromModule("Dockman.Presentation", "Main");
 
     return app.exec();
 }
